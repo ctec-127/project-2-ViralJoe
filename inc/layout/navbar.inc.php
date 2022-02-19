@@ -6,14 +6,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item <?= echoActiveClassIfRequestMatches("display-records") ?>">
-          <a class="nav-link active" aria-current="page" href="display-records.php">Home</a>
+        <li class="nav-item">
+          <a class="nav-link <?= echoActiveClassIfRequestMatches("display-records") ?>" aria-current="page" href="display-records.php">Home</a>
         </li>
-        <li class="nav-item <?= echoActiveClassIfRequestMatches("create-record") ?>">
-          <a class="nav-link" href="create-record.php">Create Record</a>
+        <li class="nav-item">
+          <a class="nav-link <?= echoActiveClassIfRequestMatches("create-record") ?>" href="create-record.php">Create Record</a>
         </li>
-        <li class="nav-item <?= echoActiveClassIfRequestMatches("advanced-search") ?>">
-          <a class="nav-link" href="advanced-search.php">Advanced Search</a>
+        <li class="nav-item">
+          <a class="nav-link <?= echoActiveClassIfRequestMatches("advanced-search") ?>" href="advanced-search.php">Advanced Search</a>
         </li>
       </ul>
       <form class="d-flex" action="search-records.php" method="post">

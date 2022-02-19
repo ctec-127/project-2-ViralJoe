@@ -1,6 +1,6 @@
 <?php // Filename: config.inc.php
 // copyright
-$app_copyright = '&copy; 2019 - 2022 by YOUR NAME GOES HERE';
+$app_copyright = '&copy; 2019 - 2022 by Joeseph Hall';
 // version
 $app_version = 0.1;
 // app name
