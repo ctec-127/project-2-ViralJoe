@@ -43,7 +43,7 @@ if (isset($_GET["filter"])) {
     $stmt->execute();
     // $stmt->execute(["orderby" => $orderby]);
 } else {
-    $sql = "SELECT * FROM $db_table";
+    $sql = "SELECT * FROM $db_table ORDER BY last_name";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 }

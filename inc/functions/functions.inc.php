@@ -44,9 +44,9 @@ function display_record_table($records)
         echo "<td>{$row->gpa}</td>";
         // makes 0's and 1's display yes or no in table
         if ($row->financial_aid == "1") {
-            $row->financial_aid = "yes";
+            $row->financial_aid = "Yes";
         } else {
-            $row->financial_aid = "no";
+            $row->financial_aid = "No";
         }
         echo "<td>{$row->financial_aid}</td>";
         echo "<td>{$row->degree_program}</td>";

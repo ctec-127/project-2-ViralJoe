@@ -33,17 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $phone = $_POST["phone"];
     }
-    if (empty($_POST["gpa"])) {
-        array_push($error_bucket, "<p>A <strong>GPA Number</strong> is required.</p>");
-    } else {
-        // force gpa to insert actual numbers into database
-        $gpa = floatval($_POST["gpa"]);
-    }
-    if (($_POST["program"] == "select")) {
-        array_push($error_bucket, "<p>A <strong>Program</strong> is required.</p>");
-    } else {
-        $degree_program = $_POST["program"];
-    }
+
+    // force gpa to insert actual numbers into database
+    $gpa = floatval($_POST["gpa"]);
+
+
+    $degree_program = $_POST["program"];
+
     $financial_aid = $_POST["finAid"];
 
     // If we have no errors than we can try and insert the data
