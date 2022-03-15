@@ -38,12 +38,14 @@ if (isset($_GET["filter"])) {
         $sql = "SELECT * FROM $db_table ORDER BY financial_aid ASC";
     } elseif ($orderby == "degree_program") {
         $sql = "SELECT * FROM $db_table ORDER BY degree_program ASC";
+    } elseif ($orderby == "graduation_date") {
+        $sql = "SELECT * FROM $db_table ORDER BY graduation_date ASC";
     }
     $stmt = $db->prepare($sql);
     $stmt->execute();
-    // $stmt->execute(["orderby" => $orderby]);
 } else {
-    $sql = "SELECT * FROM $db_table ORDER BY last_name";
+    # Setting default sort to show newest created records at the top of the table.
+    $sql = "SELECT * FROM $db_table ORDER BY data_created DESC";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 }

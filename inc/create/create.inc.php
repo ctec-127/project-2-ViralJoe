@@ -6,8 +6,8 @@ require_once __DIR__ . "/../app/config.inc.php";
 
 $error_bucket = [];
 
+# Checking for errors and creating an Error Bucket as needed.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // First insure that all required fields are filled in
     if (empty($_POST["first"])) {
         array_push($error_bucket, "<p>A <strong>First Name</strong> is required.</p>");
     } else {
@@ -34,22 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phone = $_POST["phone"];
     }
 
-    // force gpa to insert actual numbers into database
+    // force gpa to insert actual float numbers into database
     $gpa = floatval($_POST["gpa"]);
-
 
     $degree_program = $_POST["program"];
 
     $financial_aid = $_POST["finAid"];
 
+    $graduation_date = $_POST["graduation_date"];
+
     // If we have no errors than we can try and insert the data
     if (count($error_bucket) == 0) {
-        // Time for some SQL
-        $sql = "INSERT INTO $db_table (first_name,last_name,email,phone,student_id,gpa,financial_aid,degree_program) ";
-        $sql .= "VALUES (:first,:last,:email,:phone,:student_id,:gpa,:finAid,:program)";
-
+        // Creating SQL statement to INSERT student's values into DB.
+        $sql = "INSERT INTO $db_table (first_name,last_name,email,phone,student_id,gpa,financial_aid,degree_program,graduation_date) ";
+        $sql .= "VALUES (:first,:last,:email,:phone,:student_id,:gpa,:finAid,:program,:graduation_date)";
         $stmt = $db->prepare($sql);
-        $stmt->execute(["first" => $first, "last" => $last, "email" => $email, "phone" => $phone, "student_id" => $student_id, "gpa" => $gpa, "finAid" => $financial_aid, "program" => $degree_program]);
+        $stmt->execute(["first" => $first, "last" => $last, "email" => $email, "phone" => $phone, "student_id" => $student_id, "gpa" => $gpa, "finAid" => $financial_aid, "program" => $degree_program, "graduation_date" => $graduation_date]);
 
         if ($stmt->rowCount() == 0) {
             echo '<div class="alert alert-danger" role="alert">

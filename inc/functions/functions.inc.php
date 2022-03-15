@@ -30,9 +30,18 @@ function display_record_table($records)
 {
     echo '<div class="table-responsive">';
     echo "<table class=\"table table-striped table-hover table-sm mt-3 table-bordered\">";
-    echo '<thead class="table-dark"><tr><th class="bg-primary">Actions</th><th><a href="?sortby=student_id">Student ID</a></th><th><a href="?sortby=first_name">First Name</a></th><th><a href="?sortby=last_name">Last Name</a></th><th><a href="?sortby=gpa">GPA</a></th><th><a href="?sortby=financial_aid">Financial Aid</a></th><th><a href="?sortby=degree_program">Program</a></th><th><a href="?sortby=email">Email</a></th><th><a href="?sortby=phone">Phone</a></th></thead>';
-
-
+    echo '<thead class="table-dark"><tr>
+        <th class="bg-primary">Actions</th>
+        <th><a href="?sortby=student_id">Student ID</a></th>
+        <th><a href="?sortby=first_name">First Name</a></th>
+        <th><a href="?sortby=last_name">Last Name</a></th>
+        <th class="text-center"><a href="?sortby=gpa">GPA</a></th>
+        <th class="text-center"><a href="?sortby=financial_aid">Financial Aid</a></th>
+        <th><a href="?sortby=degree_program">Program</a></th>
+        <th><a href="?sortby=graduation_date">Graduation Date</a></th>
+        <th><a href="?sortby=email">Email</a></th>
+        <th><a href="?sortby=phone">Phone</a></th>
+        </thead>';
 
     foreach ($records as $row) {
         # display rows and columns of data
@@ -41,19 +50,36 @@ function display_record_table($records)
         echo "<td>{$row->student_id}</td>";
         echo "<td><strong>{$row->first_name}</strong></td>";
         echo "<td><strong>{$row->last_name}</strong></td>";
-        echo "<td>{$row->gpa}</td>";
-        // makes 0's and 1's display yes or no in table
-        if ($row->financial_aid == "1") {
-            $row->financial_aid = "Yes";
-        } else {
-            $row->financial_aid = "No";
+        // changes cell's background color based on GPA.
+        if ($row->gpa <= 2.0) {
+            $gpa_class = " bg-danger text-white";
+        } elseif ($row->gpa > 2.0 && $row->gpa < 4.0) {
+            $gpa_class = "";
+        } elseif ($row->gpa == 4.0) {
+            $gpa_class = " bg-success text-white";
         }
-        echo "<td>{$row->financial_aid}</td>";
+        echo "<td class=\"text-center {$gpa_class}\">{$row->gpa}</td>";
+        // makes 0's and 1's display as Yes or No in table and gives them color.
+        if ($row->financial_aid == "1") {
+            $fin_aid_text = "Yes";
+            $class = " text-success";
+        } else {
+            $fin_aid_text = "No";
+            $class = " text-danger";
+        }
+        echo "<td class=\"text-center {$class}\"><strong>{$fin_aid_text}</strong></td>";
         echo "<td>{$row->degree_program}</td>";
+        // setting date format to American
+        if ($row->graduation_date != null && $row->graduation_date != "0000-00-00") {
+            $date = date_format(date_create($row->graduation_date), "m/d/y");
+            echo "<td>{$date}</td>";
+        } else {
+            echo "<td></td>";
+        }
         echo "<td>{$row->email}</td>";
         echo "<td>{$row->phone}</td>";
         echo '</tr>';
-    } // end while
+    }
     echo '</table>';
     echo '</div>';
 }

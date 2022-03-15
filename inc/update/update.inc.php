@@ -9,9 +9,9 @@ if (isset($_GET["id"])) {
     $id = $_GET["id"];
 }
 
+# Checking for errors and creating an Error Bucket as needed.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
-
     if (empty($_POST["first"])) {
         array_push($error_bucket, "<p>A <strong>First Name</strong> is required.</p>");
     } else {
@@ -45,11 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $financial_aid = $_POST["finAid"];
 
+    $graduation_date = $_POST["graduation_date"];
+
     // If we have no errors than we can try and insert the data
     if (count($error_bucket) == 0) {
-        $sql = "UPDATE student_v2 SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone, student_id = :student_id, gpa = :gpa, financial_aid = :financial_aid, degree_program = :degree_program WHERE id = :id";
+        $sql = "UPDATE student_v2 SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone, student_id = :student_id, gpa = :gpa, financial_aid = :financial_aid, degree_program = :degree_program, graduation_date = :graduation_date WHERE id = :id";
         $stmt = $db->prepare($sql);
-        $stmt->execute(["first_name" => $first, "last_name" => $last, "email" => $email, "phone" => $phone, "student_id" => $student_id, "gpa" => $gpa, "financial_aid" => $financial_aid, "degree_program" => $degree_program, "id" => $id]);
+        $stmt->execute(["first_name" => $first, "last_name" => $last, "email" => $email, "phone" => $phone, "student_id" => $student_id, "gpa" => $gpa, "financial_aid" => $financial_aid, "degree_program" => $degree_program, "graduation_date" => $graduation_date, "id" => $id]);
 
         if ($stmt->rowCount() == 0) {
             echo '<div class="alert alert-danger" role="alert">
@@ -62,12 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+# Grabbing a student from the DB via thier id.
 $sql = "SELECT * FROM student_v2 WHERE id=:id ";
 $stmt = $db->prepare($sql);
 $stmt->execute(["id" => $id]);
 $student = $stmt->fetch();
 // var_dump($student);
 
+# Setting the variables equal to their POST values.
 $first = $student->first_name;
 $last = $student->last_name;
 $student_id = $student->student_id;
@@ -83,3 +87,4 @@ if ($finAid == "1") {
     $finAidNo = True;
 }
 $program = $student->degree_program;
+$graduation_date = $student->graduation_date;
